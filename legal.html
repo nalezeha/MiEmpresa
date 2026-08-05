@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pro · Mi Empresa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        /* Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #4338CA;
+            --primary-light: #EEF2FF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-500: #64748B;
+            --gray-700: #334155;
+            --gray-900: #0F172A;
+            --white: #FFFFFF;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header y menú */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0 2rem;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        .logo span { color: var(--gray-700); }
+
+        /* Menú de navegación */
+        nav.menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        nav.menu a {
+            text-decoration: none;
+            color: var(--gray-500);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            padding: 0.25rem 0;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+        nav.menu a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        nav.menu a.activo {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1.25rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            gap: 0.4rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+        .btn-outline:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-500);
+        }
+
+        .btn-success { background: #10B981; color: white; }
+        .btn-success:hover { background: #059669; }
+
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+
+        .btn-sm { padding: 0.25rem 0.75rem; font-size: 0.8rem; }
+
+        /* ===== CONTENEDOR PRINCIPAL (DASHBOARD) ===== */
+        .page {
+            display: none; /* Todas las páginas ocultas por defecto */
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+            flex: 1;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .page.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Términos y Condiciones */
+        .legal-content {
+            background: var(--white);
+            padding: 2.5rem 3rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .legal-content h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.25rem;
+            color: var(--gray-900);
+        }
+        .legal-content .subtitle {
+            color: var(--gray-500);
+            border-bottom: 1px solid var(--gray-200);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .legal-content h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legal-content h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .legal-content p {
+            color: var(--gray-700);
+            margin-bottom: 1rem;
+        }
+
+        .legal-content ul {
+            margin: 0.5rem 0 1.5rem 1.5rem;
+            color: var(--gray-700);
+        }
+        .legal-content ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-content .highlight-box {
+            background: var(--primary-light);
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary);
+            margin: 1.5rem 0;
+        }
+
+        .legal-content .btn-back {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            header {
+                padding: 0 1rem;
+                height: 64px;
+                flex-wrap: wrap;
+            }
+            nav.menu {
+                gap: 1rem;
+            }
+            nav.menu a {
+                font-size: 0.8rem;
+            }
+            .dashboard-header h1 {
+                font-size: 1.4rem;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .legal-content {
+                padding: 1.5rem;
+            }
+            .legal-content h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo" onclick="location.href='prueba.html'">Mi<span>Empresa</span></div>
+    </header>
+
+    <!-- Términos y Condiciones -->
+    <main id="page-legal" class="page visible">
+        <div class="legal-content">
+            <h1>Aviso Legal</h1>
+            <div class="subtitle">
+                <span>Política de Privacidad y Términos de Servicio</span>
+                <span style="font-size:0.8rem; background: var(--gray-100); padding:0.2rem 1rem; border-radius:20px;">Última actualización: 29 de julio de 2026</span>
+            </div>
+
+            <!-- Sección 1: Política de Privacidad -->
+            <h2>1. Política de Privacidad</h2>
+            <p>En <strong>MiEmpresa</strong>, nos tomamos muy en serio la protección de tus datos personales. Esta política describe cómo recopilamos, usamos y protegemos tu información cuando visitas nuestro sitio web o utilizas nuestros servicios.</p>
+
+            <h3 style="font-weight:600; margin-top:1.2rem; font-size:1rem;">1.1. Datos que recopilamos</h3>
+            <ul>
+                <li><strong>Información de contacto:</strong> Nombre, correo electrónico, número de teléfono.</li>
+                <li><strong>Datos de navegación:</strong> Dirección IP, tipo de navegador, páginas visitadas y tiempo de sesión (mediante cookies analíticas).</li>
+                <li><strong>Información transaccional:</strong> Historial de compras o servicios contratados.</li>
+            </ul>
+
+            <h3 style="font-weight:600; margin-top:1.2rem; font-size:1rem;">1.2. Uso de la información</h3>
+            <ul>
+                <li>Para gestionar tu cuenta y prestarte los servicios solicitados.</li>
+                <li>Para enviarte comunicaciones comerciales (si has dado tu consentimiento).</li>
+                <li>Para mejorar nuestro sitio web y la experiencia de usuario.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Tus derechos:</strong> Puedes acceder, rectificar o eliminar tus datos en cualquier momento enviándonos un correo a <strong>privacidad@miempresa.com</strong>.
+            </div>
+
+            <h3 style="font-weight:600; margin-top:1.2rem; font-size:1rem;">1.3. Cookies</h3>
+            <p>Utilizamos cookies propias y de terceros para analizar el tráfico y mostrarte contenido relevante. Puedes configurar tu navegador para rechazarlas, aunque esto podría afectar algunas funcionalidades.</p>
+
+            <!-- Sección 2: Términos de Servicio -->
+            <h2>2. Términos de Servicio</h2>
+            <p>Al utilizar este sitio web y nuestros servicios, aceptas cumplir con los siguientes términos y condiciones. Si no estás de acuerdo, por favor, abstente de usar la plataforma.</p>
+
+            <h3 style="font-weight:600; margin-top:1.2rem; font-size:1rem;">2.1. Responsabilidades del usuario</h3>
+            <ul>
+                <li>Proporcionar información veraz y actualizada en los formularios.</li>
+                <li>No realizar actividades fraudulentas o que puedan dañar la integridad del sistema.</li>
+                <li>Mantener la confidencialidad de tus credenciales de acceso (usuario y contraseña).</li>
+            </ul>
+
+            <h3 style="font-weight:600; margin-top:1.2rem; font-size:1rem;">2.2. Propiedad intelectual</h3>
+            <p>Todo el contenido de este sitio (textos, diseños, logos, código) es propiedad de <strong>MiEmpresa</strong> y está protegido por las leyes de derechos de autor. Queda prohibida su reproducción sin autorización expresa.</p>
+
+            <h3 style="font-weight:600; margin-top:1.2rem; font-size:1rem;">2.3. Limitación de responsabilidad</h3>
+            <p>No nos hacemos responsables por interrupciones del servicio debidas a causas ajenas a nuestra voluntad (problemas de red, ataques cibernéticos, etc.). El servicio se ofrece "tal cual", sin garantías implícitas de disponibilidad absoluta.</p>
+
+            <h3 style="font-weight:600; margin-top:1.2rem; font-size:1rem;">2.4. Ley aplicable</h3>
+            <p>Estos términos se rigen por las leyes de [Tu País]. Cualquier disputa será resuelta en los tribunales competentes de [Tu Ciudad].</p>
+
+            <div class="btn-back">
+                <button class="btn btn-primary" onclick="location.href='prueba.html'">← Volver al Dashboard</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 MiEmpresa. Todos los derechos reservados. — 
+        <a href="legal.html">Política de privacidad</a> · <a href="legal.html">Términos</a></p>
+    </footer>
+
+</body>
+</html>

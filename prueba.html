@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Empresa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        /* Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #4338CA;
+            --primary-light: #EEF2FF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-500: #64748B;
+            --gray-700: #334155;
+            --gray-900: #0F172A;
+            --white: #FFFFFF;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header y menú */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0 2rem;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        .logo span { color: var(--gray-700); }
+
+        /* Menú de navegación */
+        nav.menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        nav.menu a {
+            text-decoration: none;
+            color: var(--gray-500);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            padding: 0.25rem 0;
+            border-bottom: 2px solid transparent;
+        }
+        nav.menu a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        nav.menu a.activo {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Botones en el header */
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1.25rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            gap: 0.4rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+        .btn-outline:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-500);
+        }
+
+        .btn-success { background: #10B981; color: white; }
+        .btn-success:hover { background: #059669; }
+
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+
+        .btn-sm { padding: 0.25rem 0.75rem; font-size: 0.8rem; }
+
+        /* Dashboard */
+        main.dashboard {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .dashboard-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .dashboard-header p {
+            color: var(--gray-500);
+            font-weight: 400;
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .tarjeta {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+        .tarjeta:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+        .tarjeta .label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .tarjeta .valor {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 0.25rem 0 0.5rem;
+        }
+        .tarjeta .trend {
+            font-size: 0.8rem;
+            color: #10B981;
+            background: #ECFDF5;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* Sección form y table */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Formulario */
+        .form-card {
+            background: var(--white);
+            padding: 1.75rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow);
+        }
+        .form-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 0.25rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.6rem 0.9rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: var(--white);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tabla */
+        .table-wrapper {
+            background: var(--white);
+            padding: 1.75rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+        .table-wrapper h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        thead {
+            background: var(--gray-50);
+            border-bottom: 2px solid var(--gray-200);
+        }
+        th {
+            text-align: left;
+            padding: 0.75rem 0.5rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        td {
+            padding: 0.75rem 0.5rem;
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-700);
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: var(--gray-50); }
+
+        .badge {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge.entregado { background: #ECFDF5; color: #10B981; }
+        .badge.pendiente { background: #FEF3C7; color: #D97706; }
+
+        .acciones-btns {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Login */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1.5rem;
+        }
+        .modal-overlay.visible {
+            display: flex;
+        }
+
+        .modal-login {
+            background: var(--white);
+            max-width: 420px;
+            width: 100%;
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: fadeUp 0.25s ease;
+            position: relative;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-login .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-500);
+            transition: var(--transition);
+            line-height: 1;
+        }
+        .modal-login .close-btn:hover {
+            color: var(--gray-900);
+            transform: rotate(90deg);
+        }
+
+        .modal-login h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .modal-login p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-login .btn {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .modal-login .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            header {
+                padding: 0 1rem;
+                height: 64px;
+                flex-wrap: wrap;
+            }
+            nav.menu {
+                gap: 1rem;
+            }
+            nav.menu a {
+                font-size: 0.8rem;
+            }
+            .dashboard-header h1 {
+                font-size: 1.4rem;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo" onclick="location.href='prueba.html'">Mi<span>Empresa</span></div>
+
+        <nav class="menu">
+            <a href="#" class="activo">Dashboard</a>
+            <a href="#" onclick="toggleModal(true)">Productos</a>
+            <a href="#" onclick="toggleModal(true)">Clientes</a>
+            <a href="#" onclick="toggleModal(true)">Reportes</a>
+        </nav>
+
+        <div class="header-actions">
+            <button class="btn btn-outline btn-sm" onclick="toggleModal(true)">Iniciar Sesión</button>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <main class="dashboard">
+
+        <!-- Título del Dashboard -->
+        <div class="dashboard-header">
+            <div>
+                <h1>Panel de Control</h1>
+                <p>Bienvenido de nuevo, aquí tienes el resumen de hoy.</p>
+            </div>
+            <button class="btn btn-primary" onclick="toggleModal(true)">+ Nuevo Reporte</button>
+        </div>
+
+        <!-- Cards -->
+        <section class="cards-grid">
+            <div class="tarjeta">
+                <div class="label">Usuarios Activos</div>
+                <div class="valor">1,284</div>
+                <span class="trend">▲ +12%</span>
+            </div>
+            <div class="tarjeta">
+                <div class="label">Ventas Totales</div>
+                <div class="valor">$48.2K</div>
+                <span class="trend">▲ +8%</span>
+            </div>
+            <div class="tarjeta">
+                <div class="label">Pedientes</div>
+                <div class="valor">23</div>
+                <span class="trend" style="color:#D97706; background:#FEF3C7;">● En espera</span>
+            </div>
+            <div class="tarjeta">
+                <div class="label">Ingresos Netos</div>
+                <div class="valor">$12.8K</div>
+                <span class="trend">▲ +4.5%</span>
+            </div>
+        </section>
+
+        <!-- Sección form y table -->
+        <div class="content-grid">
+
+            <!-- Formulario -->
+            <section class="form-card">
+                <h3>Crear Nuevo Registro</h3>
+                <form id="miFormulario">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre">Nombre completo</label>
+                            <input type="text" id="nombre" placeholder="María Gómez" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" placeholder="maria@correo.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="producto">Producto / Servicio</label>
+                        <select id="producto">
+                            <option>Consultoría Pro</option>
+                            <option>Marketing Digital</option>
+                            <option>Desarrollo Web</option>
+                            <option>Diseño UI/UX</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensaje">Notas adicionales</label>
+                        <textarea id="mensaje" rows="2" placeholder="Detalles del pedido..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="width:100%;">Guardar Registro</button>
+                </form>
+            </section>
+
+            <!-- Tabla -->
+            <section class="table-wrapper">
+                <h3>Últimos Pedidos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Producto</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#001</strong></td>
+                            <td>Ana Martínez</td>
+                            <td>Consultoría</td>
+                            <td><span class="badge entregado">Entregado</span></td>
+                            <td>
+                                <div class="acciones-btns">
+                                    <button class="btn btn-primary btn-sm" onclick="toggleModal(true)">Editar</button>
+                                    <button class="btn btn-danger btn-sm" onclick="toggleModal(true)">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>#002</strong></td>
+                            <td>Carlos Ruiz</td>
+                            <td>Marketing</td>
+                            <td><span class="badge pendiente">Pendiente</span></td>
+                            <td>
+                                <div class="acciones-btns">
+                                    <button class="btn btn-primary btn-sm" onclick="toggleModal(true)">Editar</button>
+                                    <button class="btn btn-danger btn-sm" onclick="toggleModal(true)">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>#003</strong></td>
+                            <td>Laura Fernández</td>
+                            <td>Diseño Web</td>
+                            <td><span class="badge">Procesando</span></td>
+                            <td>
+                                <div class="acciones-btns">
+                                    <button class="btn btn-primary btn-sm" onclick="toggleModal(true)">Editar</button>
+                                    <button class="btn btn-danger btn-sm" onclick="toggleModal(true)">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin-top:1.5rem; display:flex; justify-content:flex-end;">
+                    <button class="btn btn-outline btn-sm" onclick="toggleModal(true)">Ver todos los pedidos →</button>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 MiEmpresa. Todos los derechos reservados. — 
+        <a href="legal.html">Política de privacidad</a> · <a href="legal.html">Términos</a></p>
+    </footer>
+
+    <!-- Login -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-login">
+            <button class="close-btn" onclick="toggleModal(false)">✕</button>
+
+            <h2>Iniciar Sesión</h2>
+            <p>Accede a tu panel de administración.</p>
+
+            <form onsubmit="event.preventDefault(); alert('¡Sesión iniciada!'); toggleModal(false);">
+                <div class="form-group">
+                    <label for="loginUser">Usuario o correo</label>
+                    <input type="text" id="loginUser" placeholder="admin@ejemplo.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPass">Contraseña</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Entrar al Dashboard</button>
+            </form>
+
+            <p style="margin-top:1rem; font-size:0.8rem; text-align:center; color:var(--gray-500);">
+                ¿Olvidaste tu contraseña? <a href="#" style="color:var(--primary);">Recupérala aquí</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- JS del login -->
+    <script>
+        // Función para mostrar/ocultar el login
+        function toggleModal(show) {
+            const modal = document.getElementById('loginModal');
+            if (show) {
+                modal.classList.add('visible');
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.remove('visible');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Cerrar el login si el usuario hace clic fuera del recuadro blanco
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleModal(false);
+            }
+        });
+
+        // Prevenir el envío real del formulario principal
+        document.getElementById('miFormulario').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('✅ Registro guardado correctamente.');
+            this.reset();
+        });
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                toggleModal(false);
+            }
+        });
+    </script>
+
+</body>
+</html>
